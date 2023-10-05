@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCtrl : MonoBehaviour
 {
     public float speed = 5f;
+    public float jumpForce = 900f;
     private Rigidbody2D rb2d;
     private Animator anim;
     private SpriteRenderer spRenderer;
@@ -22,7 +23,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal"); // 左入力で-1、右入力で1、入力なしで0
 
-        anim.SetFloat("Speed", Mathf.Abs(x * speed));
+        anim.SetFloat("Speed", Mathf.Abs(x * speed)); // 歩きアニメーション
 
         // キャラの左右の向きを変える
         if(x<0){
@@ -33,5 +34,8 @@ public class PlayerCtrl : MonoBehaviour
 
         rb2d.AddForce( Vector2.right * x * speed );
 
+        if(Input.GetButtonDown("Jump")){
+            rb2d.AddForce( Vector2.up * jumpForce );
+        }
     }
 }
